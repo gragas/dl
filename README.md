@@ -3,7 +3,7 @@
 There are two ways to approach this problem that I thought of:
 
 1. Split up the download across n routines, giving each routine a range
-   of size $contentLength / n. Have each routine write into part of a buffer,
+   of size `$contentLength / n`. Have each routine write into part of a buffer,
    and then write the buffer to disk.
 2. Same as 1, but have each routine open up the destination file and write
    into the correct position.
@@ -34,10 +34,11 @@ It's also usually a good idea to avoid making assumptions about how each package
 will be used. For example, if this project were a larger one --- a general
 download library, say --- then it would be a good idea for the `download` package
 to make no assumptions about who is using it: the `download` package should not
-print to stdout so CLI programs built with it look nice.
+print to stdout such that CLI programs built with it look nice. Nor should it
+call any other extraneous functions or update a GUI.
 
 But this task was very narrow in scope, so I broke many general rules that keep
-larger projects maintainable and scale well.
+larger projects maintainable and scalable.
 
 # Benchmarks
 
