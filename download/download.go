@@ -37,8 +37,8 @@ func Download(path, url string, routines int) error {
 	allowRange := h.AcceptRanges()
 	numBytes, err := h.ContentLength()
 	if err != nil || !allowRange || routines == 1 {
-		// if the server allows ranges for the resource, and we know
-		// the content length, download in parallel
+		// if the server doesn't allow range downloads,
+		// use a single thread
 		var b bytes.Buffer
 		if _, err := io.Copy(&b, response.Body); err != nil {
 			fmt.Printf("failure! %v elapsed\n", time.Since(start))
@@ -46,7 +46,8 @@ func Download(path, url string, routines int) error {
 		}
 		buf = b.Bytes()
 	} else {
-		// otherwise download on a single thread
+		// if the server allows ranges for the resource, and we know
+		// the content length, download in parallel
 		buf, err = downloadPar(url, numBytes, routines)
 		if err != nil {
 			fmt.Printf("failure! %v elapsed\n", time.Since(start))
