@@ -160,7 +160,7 @@ func downloadPar(url string, numBytes, routines int) (buf []byte, err error) {
 	return buf, nil
 }
 
-// download slice downloads the range [start-end] of the
+// downloadSlice downloads the range [start-end] of the
 // given url and copies the download bytes into the given
 // []byte starting at $start. It returns the total number
 // of bytesWritten or an error
